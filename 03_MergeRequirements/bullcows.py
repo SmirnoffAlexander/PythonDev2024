@@ -3,6 +3,8 @@ import random
 from urllib.parse import urlparse
 from urllib.request import urlopen
 
+import cowsay
+
 
 def is_valid_url(url):
     try:
@@ -47,15 +49,17 @@ def gameplay(ask: callable, inform: callable, words: list[str]) -> int:
 
 
 def ask(prompt: str, valid: list[str] = None) -> str:
+    random_cow = random.choice(cowsay.list_cows())
     while True:
-        print(prompt)
+        print(cowsay.cowsay(prompt, cow=random_cow))
         guess = input()
         if valid is None or guess in valid:
             return guess
 
 
 def inform(format_string: str, bulls: int, cows: int) -> None:
-    print(format_string.format(bulls, cows))
+    random_cow = random.choice(cowsay.list_cows())
+    print(cowsay.cowsay(format_string.format(bulls, cows), cow=random_cow))
 
 
 def main():
