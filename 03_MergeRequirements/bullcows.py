@@ -1,9 +1,12 @@
 import argparse
 import random
+from pathlib import Path
 from urllib.parse import urlparse
 from urllib.request import urlopen
 
 import cowsay
+
+CUSTOM_COW_PATH = Path(__file__).parent / "c3po.cow"
 
 
 def is_valid_url(url):
@@ -49,9 +52,10 @@ def gameplay(ask: callable, inform: callable, words: list[str]) -> int:
 
 
 def ask(prompt: str, valid: list[str] = None) -> str:
-    random_cow = random.choice(cowsay.list_cows())
+    with open(CUSTOM_COW_PATH, "r") as f:
+        custom_cow = cowsay.read_dot_cow(f)
     while True:
-        print(cowsay.cowsay(prompt, cow=random_cow))
+        print(cowsay.cowsay(prompt, cowfile=custom_cow))
         guess = input()
         if valid is None or guess in valid:
             return guess
