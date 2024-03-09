@@ -48,6 +48,17 @@ class CowSayShell(cmd.Cmd):
 
         print(cowsay.cowsay(**kwargs))
 
+    def complete_cowsay(self, text, line, begidx, endidx):
+        words = (line[:endidx]).split()
+        if words[-1] == "-e":
+            return [data.eyes for data in cowsay.COW_OPTIONS.values()]
+        elif words[-1] == "-T":
+            return ["U ", " "]
+        elif words[-1] == "-f":
+            return cowsay.list_cows()
+        else:
+            return None
+
     def do_list_cows(self, args):
         """Lists all cow file names"""
         splitted_args = self.shlex_parser(args)
@@ -97,6 +108,17 @@ class CowSayShell(cmd.Cmd):
             )
 
         print(cowsay.cowthink(**kwargs))
+
+    def complete_cowthink(self, text, line, begidx, endidx):
+        words = (line[:endidx]).split()
+        if words[-1] == "-e":
+            return [data.eyes for data in cowsay.COW_OPTIONS.values()]
+        elif words[-1] == "-T":
+            return ["U ", " "]
+        elif words[-1] == "-f":
+            return cowsay.list_cows()
+        else:
+            return None
 
     def do_bye(self, arg):
         """Stop interaction with cow!"""
